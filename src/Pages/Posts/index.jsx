@@ -11,6 +11,22 @@ export const Posts = () => {
     useEffect(() => {
         const GetQuery = async () => {
             try {
+                const response = await QueryData.get(`/posts?limit=10&skip=0`)
+                setPosts(response.data.posts)
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    console.log(error.response?.data.errText, 'error');
+                } else if (error instanceof Error) {
+                    console.log(error.message);
+                }
+            }  
+        }
+        GetQuery()
+    }, [])
+
+    useEffect(() => {
+        const GetQuery = async () => {
+            try {
                 const response = await QueryData.get(`/posts?limit=10&skip=${searcheParams.get('page')}0`)
                 setPosts(response.data.posts)
             } catch (error) {
